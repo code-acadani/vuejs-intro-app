@@ -2,6 +2,16 @@
   <div class="home">
     <h1>{{ message }}</h1>
     <li v-for="review in reviews">{{ review.rating }} STARS - {{ review.reviewer }}: {{ review.text }}</li>
+    <input v-model="reviews[2].text">
+
+    <h3>Leave a review:</h3>
+    Review: <input v-model="newReview.text">
+    Rating: <input v-model="newReview.rating">
+    Your Name: <input v-model="newReview.reviewer">
+    <button v-on:click="addReview()">Add Review</button>
+
+    <p>{{ newReview }}</p>
+
   </div>
 </template>
 
@@ -28,17 +38,35 @@ export default {
           text: "Vue.js is waaaaay better than Chinese Checkers.",
           rating: 2,
           reviewer: "Angela Pearson"
-        },
-        { 
-          text: "Vue.js so terrible, what am I doing?",
-          rating: 1,
-          reviewer: "Ace the Cat"
         }
-      ]
+      ],
+      newReview: {text: "", rating: "", reviewer: ""}
     };
   },
   created: function() {},
-  methods: {},
+  methods: {
+  	addReview: function() {
+  		this.reviews.push(this.newReview);
+  	}
+  },
   computed: {}
 };
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
