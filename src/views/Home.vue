@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <h1>{{ message }}</h1>
-    <li v-for="review in reviews" v-on:click="removeReview(review)">{{ review.rating }} STARS - {{ review.reviewer }}: {{ review.text }}</li>
+    <li v-for="review in reviews" v-on:click="removeReview(review)" v-if="isPositive(review)">{{ review.rating }} STARS - {{ review.reviewer }}: {{ review.text }}</li>
 
     <h3>Leave a review:</h3>
     Review: <input v-model="newReview.text">
@@ -36,7 +36,7 @@ export default {
           reviewer: "Emily Post"
         },
         { 
-          text: "Vue.js is waaaaay better than Chinese Checkers.",
+          text: "Vue.js is bad.",
           rating: 2,
           reviewer: "Angela Pearson"
         }
@@ -60,6 +60,10 @@ export default {
   	removeReview: function(currentReview) {
   		var index = this.reviews.indexOf(currentReview);
   		this.reviews.splice(index, 1);
+  	},
+  	isPositive: function(currentReview) {
+  		// true if the word 'bad' is not in the string
+  		return currentReview.text.indexOf('bad') === -1;
   	}
   },
   computed: {}
