@@ -1,14 +1,15 @@
 <template>
   <div class="home">
     <h1>{{ message }}</h1>
-    <li v-for="review in reviews">{{ review.rating }} STARS - {{ review.reviewer }}: {{ review.text }}</li>
-    <input v-model="reviews[2].text">
+    <li v-for="review in reviews" v-on:click="removeReview(review)">{{ review.rating }} STARS - {{ review.reviewer }}: {{ review.text }}</li>
 
     <h3>Leave a review:</h3>
     Review: <input v-model="newReview.text">
     Rating: <input v-model="newReview.rating">
     Your Name: <input v-model="newReview.reviewer">
     <button v-on:click="addReview()">Add Review</button>
+
+    <p>{{ error }}</p>
 
     <p>{{ newReview }}</p>
 
@@ -40,13 +41,25 @@ export default {
           reviewer: "Angela Pearson"
         }
       ],
-      newReview: {text: "", rating: "", reviewer: ""}
+      newReview: {text: "", rating: "", reviewer: ""},
+      error: "",
     };
   },
   created: function() {},
   methods: {
   	addReview: function() {
-  		this.reviews.push(this.newReview);
+  		if (this.newReview.text) {
+  			this.reviews.push(this.newReview);
+  			// clear text boxes
+  			this.newReview = {text: "", rating: "", reviewer: ""};
+  			this.error = "";
+  		} else {
+  			this.error = "You must enter text!"
+  		}
+  	},
+  	removeReview: function(currentReview) {
+  		var index = this.reviews.indexOf(currentReview);
+  		this.reviews.splice(index, 1);
   	}
   },
   computed: {}
